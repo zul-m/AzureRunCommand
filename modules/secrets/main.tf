@@ -80,6 +80,7 @@ resource "azurerm_key_vault_secret" "nsg" {
   key_vault_id = azurerm_key_vault.keyvault.id
 }
 
+# Create a public IP for the VM
 resource "azurerm_public_ip" "vm_public_ip" {
   name                = azurerm_key_vault_secret.public_ip.value
   resource_group_name = var.resource_group_name
@@ -87,6 +88,7 @@ resource "azurerm_public_ip" "vm_public_ip" {
   allocation_method   = "Static"
 }
 
+# Save the public IP in the key vault
 resource "azurerm_key_vault_secret" "public_ip_address" {
   name         = "vm-public-ip-address"
   value        = azurerm_public_ip.vm_public_ip.ip_address
