@@ -59,7 +59,7 @@ resource "azurerm_network_interface" "vm_nic" {
     name                          = "ipconfig"
     subnet_id                     = azurerm_subnet.vm_subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.vm_public_ip.id
+    public_ip_address_id          = module.secrets.vm_public_ip_id
   }
 }
 
@@ -89,13 +89,6 @@ resource "azurerm_windows_virtual_machine" "vm" {
   boot_diagnostics {
     storage_account_uri = ""
   }
-}
-
-resource "azurerm_public_ip" "vm_public_ip" {
-  name                = module.secrets.vm_public_ip_name
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  allocation_method   = "Static"
 }
 
 resource "azurerm_network_security_group" "vm_nsg" {

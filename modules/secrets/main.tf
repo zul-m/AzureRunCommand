@@ -79,3 +79,16 @@ resource "azurerm_key_vault_secret" "nsg" {
   value        = "${var.infrastructure_id}nsg"
   key_vault_id = azurerm_key_vault.keyvault.id
 }
+
+resource "azurerm_public_ip" "vm_public_ip" {
+  name                = azurerm_key_vault_secret.public_ip.value
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  allocation_method   = "Static"
+}
+
+resource "azurerm_key_vault_secret" "public_ip_address" {
+  name         = "vm-public-ip-address"
+  value        = azurerm_public_ip.vm_public_ip.ip_address
+  key_vault_id = azurerm_key_vault.keyvault.id
+}

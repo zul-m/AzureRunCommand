@@ -18,10 +18,10 @@ output "vm_name" {
   value = "${var.infrastructure_id}vm"
 }
 
-output "vm_public_ip_name" {
-  value = "${var.infrastructure_id}ip"
-}
-
 output "vm_nsg_name" {
   value = "${var.infrastructure_id}nsg"
+}
+
+output "vm_public_ip_id" {
+  value = azurerm_public_ip.vm_public_ip.id
 }
