@@ -1,10 +1,14 @@
-resource "random_id" "random" {
-  byte_length = 6
+resource "random_string" "username" {
+  length  = 8
+  special = false
 }
 
 resource "random_password" "password" {
-  length  = 16
-  special = true
+  length           = 16
+  special          = true
+  override_special = "!#%"
+  min_numeric      = 1
+  min_upper        = 1
 }
 
 data "azurerm_client_config" "current" {}
@@ -40,7 +44,7 @@ resource "azurerm_key_vault" "keyvault" {
 
 resource "azurerm_key_vault_secret" "username" {
   name         = "admin-username"
-  value        = random_id.random.id
+  value        = random_string.username.result
   key_vault_id = azurerm_key_vault.keyvault.id
 }
 
