@@ -1,5 +1,5 @@
 output "admin_username" {
-  value = random_id.random.id
+  value = random_string.username.result
 }
 
 output "admin_password" {
